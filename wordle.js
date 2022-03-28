@@ -464,7 +464,8 @@ function reDraw()
         {
             var rstring = "You Won in " + currentturn + " tries!!"
             document.getElementById("intro").innerHTML = rstring;
-            
+            document.getElementById("title").style.backgroundColor = "lime";
+    
             done = true;
         }
         else if(currentturn==6)
