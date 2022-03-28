@@ -60,6 +60,7 @@ let grid = new Array(6);
 let currentturn = 0;
 let lettercount = new Map();
 let greenButtons = new Set();
+let yellowButtons = new Set();
 let done = false;
 let cindex = 0;
 
@@ -425,10 +426,14 @@ function reDraw()
                 if(lettercount.has(grid[i][j]) && ( !used.has(grid[i][j]) || used.get(grid[i][j])<lettercount.get(grid[i][j]) ) )
                 {
                     let tempchar = grid[i][j];
-                    //tempchar = tempchar.toUpperCase();
+                    
                     temp.style.backgroundColor = "yellow";
                     if(!greenButtons.has(tempchar))
-                    document.getElementById(tempchar).style.backgroundColor = "yellow";
+                    {
+                        document.getElementById(tempchar).style.backgroundColor = "yellow";
+                        yellowButtons.add(tempchar);
+                    }
+                    
                     if(used.has(grid[i][j]))
                     used.set(grid[i][j], used.get(grid[i][j])+1);
                     else
@@ -437,7 +442,7 @@ function reDraw()
                 else 
                 {
                     let tempchar = grid[i][j];
-                    //tempchar = tempchar.toUpperCase();
+                    if(!greenButtons.has(tempchar) && !yellowButtons.has(tempchar))
                     document.getElementById(tempchar).style.backgroundColor = "gray";
                     temp.style.backgroundColor = "gray";
                 }
@@ -465,13 +470,15 @@ function reDraw()
             var rstring = "You Won in " + currentturn + " tries!!"
             document.getElementById("intro").innerHTML = rstring;
             document.getElementById("title").style.backgroundColor = "lime";
-    
+            
             done = true;
+            
         }
         else if(currentturn==6)
         {
             document.getElementById("intro").innerHTML = "You Lose! The word was " + currentWord + "!";
             document.getElementById("title").style.backgroundColor = "red";
+            
             
         }
         
@@ -496,6 +503,7 @@ function reset()
     currentturn = 0;
     lettercount = new Map();
     greenButtons = new Set();
+    yellowButtons = new Set();
     done = false;
     cindex = 0;
     initialize();
